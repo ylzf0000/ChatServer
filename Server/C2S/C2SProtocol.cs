@@ -4,10 +4,17 @@ namespace ServerSocket.C2S
 {
     public abstract class C2SProtocol
     {
-        protected readonly PROTOCOLTYPE type;
+        private readonly PROTOCOLTYPE type;
         private byte[] buffer;
         private int cur;
-        public PROTOCOLTYPE Type { get => type; }
+
+        protected PROTOCOLTYPE Type
+        {
+            get
+            {
+                return type;
+            }
+        }
 
         public C2SProtocol(PROTOCOLTYPE type, byte[] buffer)
         {

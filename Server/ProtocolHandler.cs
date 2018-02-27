@@ -34,7 +34,8 @@ namespace ServerSocket
             //发送sig
             if (ret == LOGINRESTYPE.SUCCESS)
             {
-                GenerateSignature(user, out string sig);
+                string sig;
+                GenerateSignature(user, out sig);
                 SignatureProtocol signatureProtocol = new SignatureProtocol(socket) { signature = sig };
                 signatureProtocol.SendData();
 

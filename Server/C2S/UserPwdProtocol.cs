@@ -19,7 +19,21 @@ namespace ServerSocket
 
         private string username;
         private string password;
-        public string Username { get => username; }
-        public string Password { get => password; }
+
+        public string Username
+        {
+            get
+            {
+                return username;
+            }
+        }
+
+        public string Password
+        {
+            get
+            {
+                return password;
+            }
+        }
     }
 }

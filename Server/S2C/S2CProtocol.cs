@@ -11,7 +11,14 @@ namespace ServerSocket.S2C
         private PROTOCOLTYPE type;
         private Socket socket;
         private List<byte> byteList;
-        public PROTOCOLTYPE Type { get => type; }
+
+        public PROTOCOLTYPE Type
+        {
+            get
+            {
+                return type;
+            }
+        }
 
         public S2CProtocol(PROTOCOLTYPE type, Socket socket)
         {
