@@ -29,7 +29,7 @@ namespace ServerSocket
             {
                 res = ret
             };
-            loginResProtocol.SendData();
+            //loginResProtocol.SendData();
 
             //发送sig
             if (ret == LOGINRESTYPE.SUCCESS)
