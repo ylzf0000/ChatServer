@@ -32,7 +32,9 @@ namespace ServerSocket.C2S
 
         public string GetString(int count)
         {
-            return Encoding.Default.GetString(buffer, cur, count);
+            int c = cur;
+            cur += count;
+            return Encoding.Default.GetString(buffer, c, count);
         }
     }
 }

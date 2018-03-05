@@ -57,7 +57,7 @@ namespace ServerSocket
                     PROTOCOLTYPE type = (PROTOCOLTYPE)buffer[0];
                     Transmit(type, buffer, socket);
                 }
-                catch (Exception e)
+                catch (SocketException e)
                 {
                     Console.WriteLine(e);
                     break;
