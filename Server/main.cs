@@ -30,6 +30,10 @@ namespace ServerSocket
                 {
                     Console.Clear();
                 }
+                else if(line == "exit")
+                {
+                    return;
+                }
             }
 
         }

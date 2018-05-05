@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using ExpType;
 using ServerSocket.C2S;
 using ServerSocket.S2C;
+using System.Threading;
 
 namespace ServerSocket
 {
@@ -30,11 +31,10 @@ namespace ServerSocket
                     while (reader.Read())
                     {
                         int size = reader.GetInt32(0);
-                        Console.WriteLine(size);
-                        return LOGINRESTYPE.SUCCESS;
-                        //var user = reader["user"];
-                        //var pwd = reader["pwd"];
-                        //Console.WriteLine(user + " " + pwd);
+                        if(size > 0)
+                            return LOGINRESTYPE.SUCCESS;
+                        else
+                            return LOGINRESTYPE.ERROR;
                     }
                 }
             }
@@ -58,13 +58,12 @@ namespace ServerSocket
             {
                 res = ret
             };
-            //loginResProtocol.SendData();
-
+            loginResProtocol.SendData();
+            Thread.Sleep(500);
             //发送sig
             if (ret == LOGINRESTYPE.SUCCESS)
             {
-                string sig;
-                GenerateSignature(user, out sig);
+                GenerateSignature(user, out string sig);
                 SignatureProtocol signatureProtocol = new SignatureProtocol(socket) { signature = sig };
                 signatureProtocol.SendData();
 

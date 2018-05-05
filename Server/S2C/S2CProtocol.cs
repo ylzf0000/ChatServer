@@ -52,7 +52,12 @@ namespace ServerSocket.S2C
             {
                 buffer[i] = byteList[i];
             }
-            socket.Send(buffer);
+            int sendSize = socket.Send(buffer);
+            
+            System.Diagnostics.StackTrace ss = new System.Diagnostics.StackTrace(true);
+            System.Reflection.MethodBase mb = ss.GetFrame(2).GetMethod();
+            Console.WriteLine("mb.Name: " + mb.Name);
+            Console.WriteLine("sendSize: " + sendSize);
         }
         public void SendData()
         {
