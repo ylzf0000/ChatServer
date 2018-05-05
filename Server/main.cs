@@ -1,4 +1,7 @@
 using System;
+using System.Configuration;
+using System.Data;
+using System.Data.Common;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -23,7 +26,7 @@ namespace ServerSocket
             while (true)
             {
                 string line = Console.ReadLine().ToLower().Trim();
-                if(line[0] == 'c')
+                if (line[0] == 'c')
                 {
                     Console.Clear();
                 }

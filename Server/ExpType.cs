@@ -12,5 +12,6 @@
         SUCCESS = 0,
         NOUSER = 1,
         PWDERROR = 2,
+        ERROR = 3,
     }
 }
