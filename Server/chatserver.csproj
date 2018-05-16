@@ -110,10 +110,13 @@
     <Compile Include="C2S\C2SProtocol.cs" />
     <Compile Include="C2S\UserPwdProtocol.cs" />
     <Compile Include="ProtocolHandler.cs" />
+    <Compile Include="C2S\RegisterProtocol.cs" />
     <Compile Include="S2C\LoginResProtocol.cs" />
+    <Compile Include="S2C\RegisterRetProtocol.cs" />
     <Compile Include="S2C\S2CProtocol.cs" />
     <Compile Include="S2C\SignatureProtocol.cs" />
     <Compile Include="ServerSocket.cs" />
+    <Compile Include="SqliteTool.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

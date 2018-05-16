@@ -75,6 +75,11 @@ namespace ServerSocket
                     c2SProtocol.UnMarshal();
                     OnUserPwdProtocol(c2SProtocol, socket);
                     break;
+                case PROTOCOLTYPE.REGISTER:
+                    c2SProtocol = new RegisterProtocol(buffer);
+                    c2SProtocol.UnMarshal();
+                    OnRegisterProtocol(c2SProtocol, socket);
+                    break;
             }
         }
 

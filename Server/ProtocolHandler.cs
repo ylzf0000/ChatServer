@@ -31,7 +31,7 @@ namespace ServerSocket
                     while (reader.Read())
                     {
                         int size = reader.GetInt32(0);
-                        if(size > 0)
+                        if (size > 0)
                             return LOGINRESTYPE.SUCCESS;
                         else
                             return LOGINRESTYPE.ERROR;
@@ -64,9 +64,65 @@ namespace ServerSocket
             if (ret == LOGINRESTYPE.SUCCESS)
             {
                 GenerateSignature(user, out string sig);
-                SignatureProtocol signatureProtocol = new SignatureProtocol(socket) { signature = sig };
+                SignatureProtocol signatureProtocol = new SignatureProtocol(socket)
+                {
+                    signature = sig
+                };
                 signatureProtocol.SendData();
 
+            }
+        }
+
+        static void OnRegisterProtocol(C2SProtocol c2SProtocol, Socket socket)
+        {
+            RegisterProtocol registerProtocol = c2SProtocol as RegisterProtocol;
+            if (registerProtocol == null)
+                return;
+            DbProviderFactory dbProviderFactory = DbProviderFactories.GetFactory("System.Data.SQLite.EF6");
+            using (var conn = dbProviderFactory.CreateConnection())
+            {
+                conn.ConnectionString = ConfigurationManager.ConnectionStrings["sqlite"].ConnectionString;
+                conn.Open();
+                DbCommand command = conn.CreateCommand();
+
+                // 判断是否已有该用户名
+                command.CommandText = string.Format(@"SELECT * FROM account where user = ""{0}"" ", registerProtocol.Username);
+                command.CommandType = CommandType.Text;
+                command.Prepare();
+                bool isExist = false;
+                using (IDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        isExist = true;
+                    }
+                }
+                if (isExist)
+                {
+                    RegisterRetProtocol prc = new RegisterRetProtocol(socket)
+                    {
+                        Res = REGISTERTYPE.EXIST
+                    };
+                    prc.SendData();
+                    return;
+                }
+                // 插入该用户名
+                command.CommandText = string.Format(@"
+                    INSERT INTO account (user, pwd) VALUES (""{0}"", ""{1}"")", registerProtocol.Username, registerProtocol.Password);
+                Console.WriteLine(command.CommandText);
+                //command.CommandText = @"select * from account";
+
+                command.CommandType = CommandType.Text;
+                command.Prepare();
+                int col = command.ExecuteNonQuery();
+                if (col > 0)
+                {
+                    RegisterRetProtocol prc = new RegisterRetProtocol(socket)
+                    {
+                        Res = REGISTERTYPE.SUCCESS
+                    };
+                    prc.SendData();
+                }
             }
         }
     }
