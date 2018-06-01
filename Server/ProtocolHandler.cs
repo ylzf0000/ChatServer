@@ -21,7 +21,7 @@ namespace ServerSocket
                 conn.Open();
                 DbCommand command = conn.CreateCommand();
                 command.CommandText = string.Format(@"select count(user) from ( select * from account where user = ""{0}"" and pwd = ""{1}"" )", username, password);
-                Console.WriteLine(command.CommandText);
+                Console.WriteLine("select count(user)");
                 //command.CommandText = @"select * from account";
 
                 command.CommandType = CommandType.Text;
